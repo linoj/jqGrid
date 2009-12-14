@@ -791,6 +791,7 @@ $.jgrid.extend({
 					if( $.isFunction(rp_ge.beforeSubmit))  { ret = rp_ge.beforeSubmit(postdata,$("#"+frmgr)); }
 				}
 				gurl = rp_ge.url ? rp_ge.url : $($t).jqGrid('getGridParam','editurl');
+				if($t.p.restful) { gurl = $t.p.url+"/{id}" }
 				if(ret[0]) {
 					if(!gurl) { ret[0]=false; ret[1] += " "+$.jgrid.errors.nourl; }
 					else { gurl = postdata.id == "_empty" ? gurl.replace("{id}",'') : gurl.replace("{id}",postdata.id); }					
@@ -1263,6 +1264,7 @@ $.jgrid.extend({
 					if( typeof p.beforeSubmit === 'function' ) { ret = p.beforeSubmit(postdata); }
 					if(ret[0]){
 						var gurl = rp_ge.url ? rp_ge.url : $($t).jqGrid('getGridParam','editurl');
+						if($t.p.restful) { gurl = $t.p.url+"/{id}" }
 						if(!gurl) { ret[0]=false;ret[1] += " "+$.jgrid.errors.nourl;}
 						else { gurl = gurl.replace("{id}",postdata); }
 					}
