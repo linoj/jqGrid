@@ -177,7 +177,8 @@ $.fn.jqGrid = function( pin ) {
 			autoencode : false,
 			remapColumns : [],
 			ajaxGridOptions :{},
-			direction : "ltr"
+			direction : "ltr",
+			restful : false
 		}, $.jgrid.defaults, pin || {});
 		var grid={         
 			headers:[],

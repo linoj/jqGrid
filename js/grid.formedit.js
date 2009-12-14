@@ -793,6 +793,7 @@ $.jgrid.extend({
 				gurl = rp_ge.url ? rp_ge.url : $($t).jqGrid('getGridParam','editurl');
 				if(ret[0]) {
 					if(!gurl) { ret[0]=false; ret[1] += " "+$.jgrid.errors.nourl; }
+					else { gurl = postdata.id == "_empty" ? gurl.replace("{id}",'') : gurl.replace("{id}",postdata.id); }					
 				}
 				if(ret[0] === false) {
 					$("#FormError>td","#"+frmtb).html(ret[1]);
@@ -805,6 +806,7 @@ $.jgrid.extend({
 					// we add to pos data array the action - the name is oper
 					postdata.oper = postdata.id == "_empty" ? "add" : "edit";
 					postdata = $.extend(postdata,rp_ge.editData,onCS);
+					if($t.p.restful) { rp_ge.mtype = postdata.id == "_empty" ? "POST" : "PUT" }
 					$.ajax( $.extend({
 						url:gurl,
 						type: rp_ge.mtype,
@@ -1262,6 +1264,7 @@ $.jgrid.extend({
 					if(ret[0]){
 						var gurl = rp_ge.url ? rp_ge.url : $($t).jqGrid('getGridParam','editurl');
 						if(!gurl) { ret[0]=false;ret[1] += " "+$.jgrid.errors.nourl;}
+						else { gurl = gurl.replace("{id}",postdata); }
 					}
 					if(ret[0] === false) {
 						$("#DelError>td","#"+dtbl).html(ret[1]);
@@ -1271,6 +1274,7 @@ $.jgrid.extend({
 							p.processing = true;
 							$(this).addClass('ui-state-active');
 							var postd = $.extend({oper:"del", id:postdata},rp_ge.delData, onCS);
+							if($t.p.restful) { p.mtype = "DELETE"; }
 							$.ajax( $.extend({
 								url:gurl,
 								type: p.mtype,
